@@ -18,7 +18,6 @@ import static com.cloudservices.homework.domain.model.proposal.ProposalState.CRE
 @AllArgsConstructor
 @Getter
 @Setter
-@Data
 class ProposalDbModel {
 
     @Id
