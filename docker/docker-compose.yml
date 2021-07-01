@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   database:
     image: mongo:latest
@@ -14,3 +14,17 @@ services:
       - ./.docker/mongodb/data/log/:/var/log/mongodb/
     ports:
       - 27017:27017
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+
+networks:
+  default:
+    name: mongodb_network

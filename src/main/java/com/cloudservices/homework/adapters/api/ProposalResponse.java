@@ -2,15 +2,15 @@ package com.cloudservices.homework.adapters.api;
 
 import com.cloudservices.homework.domain.model.proposal.Proposal;
 import com.cloudservices.homework.domain.model.proposal.ProposalState;
-import lombok.AllArgsConstructor;
+import lombok.Value;
 
-@AllArgsConstructor
-public class ProposalResponse {
+@Value
+class ProposalResponse {
 
-    private final String id;
-    private final String name;
-    private final String content;
-    private final ProposalState status;
+    String id;
+    String name;
+    String content;
+    ProposalState status;
 
     public static ProposalResponse of(Proposal proposal) {
         return new ProposalResponse(

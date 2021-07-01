@@ -15,7 +15,8 @@ class ProposalEndpoint {
 
     @PostMapping
     public ProposalResponse create(@RequestBody CreateProposalRequest createProposalRequest) {
-        return proposalApiService.create(createProposalRequest);
+        ProposalResponse proposalResponse = proposalApiService.create(createProposalRequest);
+        return proposalResponse;
     }
 
 }
