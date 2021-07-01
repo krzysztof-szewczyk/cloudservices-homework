@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Value;
 
 @Value
-public class CreateProposalRequest {
+class CreateProposalRequest {
     String name;
     String content;
 

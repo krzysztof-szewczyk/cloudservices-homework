@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class ProposalRepositoryImpl implements ProposalRepository {
+class MongoDbProposalRepository implements ProposalRepository {
 
-    private final ProposalMongoRepository repository;
+    private final SpringDataMongoProposalRepository repository;
 
     @Override
     public Proposal save(NewProposal newProposal) {
