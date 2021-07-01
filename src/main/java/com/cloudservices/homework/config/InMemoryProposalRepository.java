@@ -1,22 +1,13 @@
-package com.cloudservices.homework.adapters.db;
+package com.cloudservices.homework.config;
 
 import com.cloudservices.homework.domain.model.proposal.NewProposal;
 import com.cloudservices.homework.domain.model.proposal.Proposal;
 import com.cloudservices.homework.domain.ports.ProposalRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
-@Repository
-@RequiredArgsConstructor
-class MongoDbProposalRepository implements ProposalRepository {
-
-    private final SpringDataMongoProposalRepository repository;
-
+public class InMemoryProposalRepository implements ProposalRepository {
     @Override
     public Proposal save(NewProposal newProposal) {
-        ProposalDbModel proposalDbModel = ProposalDbModel.of(newProposal);
-        ProposalDbModel saved = repository.save(proposalDbModel);
-        return ProposalDbModel.from(saved);
+        return null;
     }
 
     @Override

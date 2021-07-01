@@ -18,7 +18,7 @@ public enum ProposalState {
     DELETED(emptySet(), false),
     CREATED(newHashSet(DELETED, VERIFIED), true);
 
-    private final Set<ProposalState> allowedNextState;
+    private final Set<ProposalState> allowedNextStates;
     private final boolean contentUpdatable;
 
 }

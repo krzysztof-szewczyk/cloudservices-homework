@@ -8,8 +8,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class HomeworkConfig {
 
+    ProposalService getProposalService() {
+        return new ProposalService(new InMemoryProposalRepository());
+    }
+
     @Bean
-    public ProposalService getProposalMongoRepository(ProposalRepository proposalRepository) {
+    ProposalService getProposalService(ProposalRepository proposalRepository) {
         return new ProposalService(proposalRepository);
     }
 
