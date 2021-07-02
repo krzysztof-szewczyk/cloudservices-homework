@@ -33,7 +33,7 @@ public class ProposalService {
 
     }
 
-    public Page<Proposal> getPage(String name, ProposalState state, Pageable pageable) {
+    public Page<Proposal> findPage(String name, ProposalState state, Pageable pageable) {
         return null;
     }
 }

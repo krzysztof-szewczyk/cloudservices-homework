@@ -55,10 +55,10 @@ class ProposalEndpoint {
 
     @GetMapping
     @ResponseStatus(OK)
-    public Page<ProposalResponse> getPage(@RequestParam String name,
+    public Page<ProposalResponse> findPage(@RequestParam String name,
                                           @RequestParam ProposalState state,
                                           @PageableDefault Pageable pageable) {
-        return proposalApiService.getPage(name, state, pageable);
+        return proposalApiService.findPage(name, state, pageable);
     }
 
 }
