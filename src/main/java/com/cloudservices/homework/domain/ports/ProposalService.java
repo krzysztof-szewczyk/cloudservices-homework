@@ -30,7 +30,6 @@ public class ProposalService {
     }
 
     public void delete(String id) {
-
     }
 
     public Page<Proposal> findPage(String name, ProposalState state, Pageable pageable) {
