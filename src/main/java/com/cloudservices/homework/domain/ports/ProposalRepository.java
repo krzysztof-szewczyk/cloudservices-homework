@@ -9,9 +9,9 @@ public interface ProposalRepository {
 
     Proposal update(Proposal proposal);
 
-    void delete(Long id);
+    void delete(String id);
 
-    void findById(Long id);
+    Proposal findById(String id);
 
     void findAll();
 }

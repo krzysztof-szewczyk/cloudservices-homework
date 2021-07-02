@@ -37,8 +37,14 @@ class ProposalEndpoint {
 
     @PutMapping
     @ResponseStatus(OK)
-    public ProposalResponse update(@RequestBody @Valid UpdateProposalRequest updateProposalRequest) {
-        return proposalApiService.update(updateProposalRequest);
+    public ProposalResponse updateContent(@RequestBody @Valid UpdateProposalContentRequest updateProposalStateRequest) {
+        return proposalApiService.updateContent(updateProposalStateRequest);
+    }
+
+    @PutMapping
+    @ResponseStatus(OK)
+    public ProposalResponse updateState(@RequestBody @Valid UpdateProposalStateRequest updateProposalStateRequest) {
+        return proposalApiService.updateState(updateProposalStateRequest);
     }
 
     @DeleteMapping("/{id}")

@@ -17,8 +17,15 @@ public class ProposalService {
         return repository.save(newProposal);
     }
 
-    public Proposal update(String id, String name, String content, ProposalState status) {
-        Proposal proposal = new Proposal(id, name, content, status);
+    public Proposal updateContent(String id, String content) {
+        Proposal proposal = repository.findById(id);
+        proposal.setContent(content);
+        return repository.update(proposal);
+    }
+
+    public Proposal updateState(String id, ProposalState state) {
+        Proposal proposal = repository.findById(id);
+        proposal.setState(state);
         return repository.update(proposal);
     }
 
@@ -26,7 +33,7 @@ public class ProposalService {
 
     }
 
-    public Page<Proposal> getPage(String name, ProposalState status, Pageable pageable) {
+    public Page<Proposal> getPage(String name, ProposalState state, Pageable pageable) {
         return null;
     }
 }

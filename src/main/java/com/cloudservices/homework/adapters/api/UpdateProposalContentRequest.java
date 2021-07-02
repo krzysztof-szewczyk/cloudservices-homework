@@ -6,21 +6,17 @@ import lombok.Getter;
 import javax.validation.constraints.NotNull;
 
 @Getter
-class UpdateProposalRequest {
+class UpdateProposalContentRequest {
 
     @NotNull
     private final String id;
 
     @NotNull
-    private final String name;
-
-    @NotNull
     private final String content;
 
     @JsonCreator
-    public UpdateProposalRequest(String id, String name, String content) {
+    public UpdateProposalContentRequest(String id, String content) {
         this.id = id;
-        this.name = name;
         this.content = content;
     }
 }

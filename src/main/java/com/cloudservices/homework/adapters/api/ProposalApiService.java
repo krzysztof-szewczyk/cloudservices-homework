@@ -20,7 +20,11 @@ class ProposalApiService {
         return ProposalResponse.of(proposal);
     }
 
-    ProposalResponse update(UpdateProposalRequest request) {
+    ProposalResponse updateContent(UpdateProposalContentRequest request) {
+        return null;
+    }
+
+    ProposalResponse updateState(UpdateProposalStateRequest request) {
         return null;
     }
 

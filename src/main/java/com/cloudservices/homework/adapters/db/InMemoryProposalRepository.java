@@ -29,13 +29,13 @@ public class InMemoryProposalRepository implements ProposalRepository {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
 
     }
 
     @Override
-    public void findById(Long id) {
-
+    public Proposal findById(String id) {
+        return null;
     }
 
     @Override
