@@ -23,7 +23,7 @@ public enum ProposalState {
     private final Set<ProposalState> allowedNextStates;
     private final boolean contentUpdatable;
 
-    public Set<ProposalState> getUpdatableContentStates() {
+    static Set<ProposalState> getUpdatableContentStates() {
         return Stream.of(ProposalState.values())
                 .filter(ProposalState::isContentUpdatable)
                 .collect(Collectors.toSet());

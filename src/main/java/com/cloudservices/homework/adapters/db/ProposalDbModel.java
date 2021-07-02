@@ -4,7 +4,6 @@ import com.cloudservices.homework.domain.model.proposal.NewProposal;
 import com.cloudservices.homework.domain.model.proposal.Proposal;
 import com.cloudservices.homework.domain.model.proposal.ProposalState;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +31,15 @@ class ProposalDbModel {
                 newProposal.getName(),
                 newProposal.getContent(),
                 CREATED
+        );
+    }
+
+    public static ProposalDbModel of(Proposal proposal) {
+        return new ProposalDbModel(
+                proposal.getId(),
+                proposal.getName(),
+                proposal.getContent(),
+                proposal.getState()
         );
     }
 

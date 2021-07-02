@@ -15,13 +15,13 @@ class MongoDbProposalRepository implements ProposalRepository {
     @Override
     public Proposal save(NewProposal newProposal) {
         ProposalDbModel proposalDbModel = ProposalDbModel.of(newProposal);
-        ProposalDbModel saved = repository.save(proposalDbModel);
-        return ProposalDbModel.from(saved);
+        return save(proposalDbModel);
     }
 
     @Override
     public Proposal update(Proposal proposal) {
-        return null;
+        ProposalDbModel proposalDbModel = ProposalDbModel.of(proposal);
+        return save(proposalDbModel);
     }
 
     @Override
@@ -37,5 +37,10 @@ class MongoDbProposalRepository implements ProposalRepository {
     @Override
     public void findAll() {
 
+    }
+
+    private Proposal save(ProposalDbModel proposalDbModel) {
+        ProposalDbModel saved = repository.save(proposalDbModel);
+        return ProposalDbModel.from(saved);
     }
 }
