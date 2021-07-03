@@ -1,5 +1,6 @@
 package com.cloudservices.homework.adapters.api;
 
+import com.cloudservices.homework.domain.model.proposal.ProposalState;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 
@@ -12,11 +13,14 @@ class UpdateProposalStateRequest {
     private final String id;
 
     @NotNull
-    private final String content;
+    private final ProposalState state;
+
+    private final String reason;
 
     @JsonCreator
-    public UpdateProposalStateRequest(String id, String content) {
+    public UpdateProposalStateRequest(String id, ProposalState state, String reason) {
         this.id = id;
-        this.content = content;
+        this.state = state;
+        this.reason = reason;
     }
 }

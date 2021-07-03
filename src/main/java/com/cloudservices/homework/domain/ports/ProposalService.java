@@ -6,8 +6,12 @@ import com.cloudservices.homework.domain.model.proposal.ProposalState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.util.StringUtils;
 
+import static com.cloudservices.homework.domain.model.proposal.Proposal.validateStateRequirements;
 import static com.cloudservices.homework.domain.model.proposal.ProposalState.CREATED;
+import static com.cloudservices.homework.domain.model.proposal.ProposalState.getReasonRequiredStates;
+import static org.apache.logging.log4j.util.Strings.isBlank;
 
 @RequiredArgsConstructor
 public class ProposalService {
@@ -25,7 +29,8 @@ public class ProposalService {
         return repository.update(proposal);
     }
 
-    public Proposal updateState(String id, ProposalState state) {
+    public Proposal updateState(String id, ProposalState state, String reason) {
+        validateStateRequirements(state, reason);
         Proposal proposal = repository.findById(id);
         proposal.setState(state);
         return repository.update(proposal);

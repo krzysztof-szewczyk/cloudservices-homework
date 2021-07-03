@@ -30,14 +30,16 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
             def updatedProposal = createProposalWithFixedState(updatedState)
 
         when:
-            service.updateState(ID, updatedState)
+            service.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
             1 * repository.update(updatedProposal)
 
         where:
-            updatedState << [VERIFIED, DELETED]
+            updatedState | reason
+            VERIFIED     | null
+            DELETED      | "reason"
     }
 
     @Unroll
@@ -46,14 +48,18 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
             def oldProposal = createProposalWithFixedState(CREATED)
 
         when:
-            service.updateState(ID, updatedState)
+            service.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
             thrown(ProposalStateCannotBeUpdatedException)
 
         where:
-            updatedState << [CREATED, ACCEPTED, REJECTED, PUBLISHED]
+            updatedState | reason
+            CREATED      | null
+            ACCEPTED     | null
+            REJECTED     | "reason"
+            PUBLISHED    | null
     }
 
     @Unroll
@@ -63,14 +69,16 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
             def updatedProposal = createProposalWithFixedState(updatedState)
 
         when:
-            service.updateState(ID, updatedState)
+            service.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
             1 * repository.update(updatedProposal)
 
         where:
-            updatedState << [ACCEPTED, REJECTED]
+            updatedState | reason
+            ACCEPTED     | null
+            REJECTED     | "reason"
     }
 
     @Unroll
@@ -79,14 +87,18 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
             def oldProposal = createProposalWithFixedState(VERIFIED)
 
         when:
-            service.updateState(ID, updatedState)
+            service.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
             thrown(ProposalStateCannotBeUpdatedException)
 
         where:
-            updatedState << [DELETED, PUBLISHED, CREATED, VERIFIED]
+            updatedState | reason
+            DELETED      | "reason"
+            PUBLISHED    | null
+            CREATED      | null
+            VERIFIED     | null
     }
 
     @Unroll
@@ -96,14 +108,16 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
             def updatedProposal = createProposalWithFixedState(updatedState)
 
         when:
-            service.updateState(ID, updatedState)
+            service.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
             1 * repository.update(updatedProposal)
 
         where:
-            updatedState << [PUBLISHED, REJECTED]
+            updatedState | reason
+            PUBLISHED    | null
+            REJECTED     | "reason"
     }
 
     @Unroll
@@ -112,14 +126,18 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
             def oldProposal = createProposalWithFixedState(ACCEPTED)
 
         when:
-            service.updateState(ID, updatedState)
+            service.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
             thrown(ProposalStateCannotBeUpdatedException)
 
         where:
-            updatedState << [ACCEPTED, VERIFIED, DELETED, CREATED]
+            updatedState | reason
+            ACCEPTED     | null
+            VERIFIED     | null
+            DELETED      | "reason"
+            CREATED      | null
     }
 
     @Unroll
@@ -128,14 +146,20 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
             def oldProposal = createProposalWithFixedState(DELETED)
 
         when:
-            service.updateState(ID, updatedState)
+            service.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
-            thrown()
+            thrown(ProposalStateCannotBeUpdatedException)
 
         where:
-            updatedState << [ACCEPTED, VERIFIED, DELETED, CREATED, REJECTED, PUBLISHED]
+            updatedState | reason
+            ACCEPTED     | null
+            VERIFIED     | null
+            DELETED      | "reason"
+            CREATED      | null
+            REJECTED     | "reason"
+            PUBLISHED    | null
     }
 
     @Unroll
@@ -144,14 +168,20 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
             def oldProposal = createProposalWithFixedState(REJECTED)
 
         when:
-            service.updateState(ID, updatedState)
+            service.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
             thrown(ProposalStateCannotBeUpdatedException)
 
         where:
-            updatedState << [ACCEPTED, VERIFIED, DELETED, CREATED, REJECTED, PUBLISHED]
+            updatedState | reason
+            ACCEPTED     | null
+            VERIFIED     | null
+            DELETED      | "reason"
+            CREATED      | null
+            REJECTED     | "reason"
+            PUBLISHED    | null
     }
 
     @Unroll
@@ -160,14 +190,38 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
             def oldProposal = createProposalWithFixedState(PUBLISHED)
 
         when:
-            service.updateState(ID, updatedState)
+            service.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
             thrown(ProposalStateCannotBeUpdatedException)
 
         where:
-            updatedState << [ACCEPTED, VERIFIED, DELETED, CREATED, REJECTED, PUBLISHED]
+            updatedState | reason
+            ACCEPTED     | null
+            VERIFIED     | null
+            DELETED      | "reason"
+            CREATED      | null
+            REJECTED     | "reason"
+            PUBLISHED    | null
+    }
+
+    def "Should NOT update proposal state when no reason"() {
+        when:
+            service.updateState(ID, updatedState, reason)
+
+        then:
+            0 * _
+            thrown(ProposalStateCannotBeUpdatedException)
+
+        where:
+            updatedState | reason
+            DELETED      | null
+            DELETED      | ""
+            DELETED      | " "
+            REJECTED     | null
+            REJECTED     | ""
+            REJECTED     | " "
     }
 
     private def createProposalWithFixedState(ProposalState state) {

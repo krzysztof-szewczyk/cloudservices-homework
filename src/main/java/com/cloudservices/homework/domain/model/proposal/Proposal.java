@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+import static com.cloudservices.homework.domain.model.proposal.ProposalState.getReasonRequiredStates;
 import static com.cloudservices.homework.domain.model.proposal.ProposalState.getUpdatableContentStates;
 import static java.util.Objects.isNull;
+import static org.apache.logging.log4j.util.Strings.isBlank;
 
 @AllArgsConstructor
 @Getter
@@ -28,6 +30,12 @@ public class Proposal {
         this.state = state;
     }
 
+    public static void validateStateRequirements(ProposalState state, String reason) {
+        if (getReasonRequiredStates().contains(state) && isBlank(reason))  {
+            throw new ProposalStateCannotBeUpdatedException();
+        }
+    }
+
     private void validateContentUpdate(String content) {
         if (isNull(content) || !hasUpdatableContent()) {
             throw new ProposalContentCannotBeUpdatedException();
@@ -45,7 +53,8 @@ public class Proposal {
     }
 
     private boolean hasProperNextState(ProposalState state) {
-        return state.getAllowedNextStates().contains(state);
+        return this.state.getAllowedNextStates()
+                .contains(state);
     }
 
 }
