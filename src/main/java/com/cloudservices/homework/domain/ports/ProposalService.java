@@ -48,8 +48,8 @@ public class ProposalService {
         }
     }
 
-    private long generateUuid() {
-        long uuid;
+    private Long generateUuid() {
+        Long uuid;
         int index = 0;
         int maxRetry = 10;
         boolean alreadyExists;

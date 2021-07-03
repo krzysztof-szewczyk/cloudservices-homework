@@ -27,7 +27,7 @@ class ProposalDbModel {
     String content;
     ProposalState state;
     String reason;
-    long uuid;
+    Long uuid;
 
     public static ProposalDbModel of(NewProposal newProposal) {
         return ProposalDbModel.builder()

@@ -44,7 +44,7 @@ public class InMemoryProposalRepository implements ProposalRepository {
     }
 
     @Override
-    public boolean existsByUuid(long uuid) {
+    public boolean existsByUuid(Long uuid) {
         return false;
     }
 }

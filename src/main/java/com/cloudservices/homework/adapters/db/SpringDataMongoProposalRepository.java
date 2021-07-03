@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 @JaversSpringDataAuditable
 interface SpringDataMongoProposalRepository extends MongoRepository<ProposalDbModel, String> {
-    boolean existsByUuid(long uuid);
+    boolean existsByUuid(Long uuid);
 }

@@ -18,7 +18,7 @@ class ProposalResponse {
     String content;
     ProposalState state;
     String reason;
-    long uuid;
+    Long uuid;
 
     public static ProposalResponse of(Proposal proposal) {
         return ProposalResponse.builder()

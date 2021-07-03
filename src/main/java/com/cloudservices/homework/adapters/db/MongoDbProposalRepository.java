@@ -1,9 +1,9 @@
 package com.cloudservices.homework.adapters.db;
 
+import com.cloudservices.homework.adapters.db.exceptions.ProposalNotFoundException;
 import com.cloudservices.homework.domain.model.proposal.NewProposal;
 import com.cloudservices.homework.domain.model.proposal.Proposal;
 import com.cloudservices.homework.domain.model.proposal.ProposalState;
-import com.cloudservices.homework.adapters.db.exceptions.ProposalNotFoundException;
 import com.cloudservices.homework.domain.ports.ProposalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
@@ -11,8 +11,6 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-
-import java.math.BigInteger;
 
 @Repository
 @RequiredArgsConstructor
@@ -63,7 +61,7 @@ class MongoDbProposalRepository implements ProposalRepository {
     }
 
     @Override
-    public boolean existsByUuid(long uuid) {
+    public boolean existsByUuid(Long uuid) {
         return repository.existsByUuid(uuid);
     }
 }

@@ -7,8 +7,6 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-import java.math.BigInteger;
-
 import static com.cloudservices.homework.domain.model.proposal.ProposalState.PUBLISHED;
 import static com.cloudservices.homework.domain.model.proposal.ProposalState.getReasonRequiredStates;
 import static com.cloudservices.homework.domain.model.proposal.ProposalState.getUpdatableContentStates;
@@ -25,7 +23,7 @@ public class Proposal {
     private String content;
     private ProposalState state;
     private String reason;
-    private long uuid;
+    private Long uuid;
 
     public void setContent(String content) {
         validateContentUpdate(content);
@@ -37,7 +35,7 @@ public class Proposal {
         this.state = state;
     }
 
-    public void setUuid(long uuid) {
+    public void setUuid(Long uuid) {
         if (state == PUBLISHED) {
             this.uuid = uuid;
         }
