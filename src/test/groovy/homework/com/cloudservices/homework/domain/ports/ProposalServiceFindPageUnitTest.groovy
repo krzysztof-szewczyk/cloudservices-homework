@@ -5,7 +5,7 @@ import com.cloudservices.homework.domain.ports.ProposalService
 import spock.lang.Specification
 import spock.lang.Subject
 
-class ProposalServiceGetUnitTest extends Specification {
+class ProposalServiceFindPageUnitTest extends Specification {
 
 
     ProposalRepository repository = Mock(ProposalRepository)
