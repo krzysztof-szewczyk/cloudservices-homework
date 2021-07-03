@@ -3,6 +3,7 @@ package homework.com.cloudservices.homework.domain.ports
 
 import com.cloudservices.homework.domain.model.proposal.Proposal
 import com.cloudservices.homework.domain.model.proposal.ProposalState
+import com.cloudservices.homework.domain.model.proposal.exceptions.ProposalStateCannotBeUpdatedException
 import com.cloudservices.homework.domain.ports.ProposalRepository
 import com.cloudservices.homework.domain.ports.ProposalService
 import org.bson.types.ObjectId
@@ -49,7 +50,7 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
 
         then:
             1 * repository.findById(ID) >> oldProposal
-            thrown()
+            thrown(ProposalStateCannotBeUpdatedException)
 
         where:
             updatedState << [CREATED, ACCEPTED, REJECTED, PUBLISHED]
@@ -82,7 +83,7 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
 
         then:
             1 * repository.findById(ID) >> oldProposal
-            thrown()
+            thrown(ProposalStateCannotBeUpdatedException)
 
         where:
             updatedState << [DELETED, PUBLISHED, CREATED, VERIFIED]
@@ -115,7 +116,7 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
 
         then:
             1 * repository.findById(ID) >> oldProposal
-            thrown()
+            thrown(ProposalStateCannotBeUpdatedException)
 
         where:
             updatedState << [ACCEPTED, VERIFIED, DELETED, CREATED]
@@ -147,7 +148,7 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
 
         then:
             1 * repository.findById(ID) >> oldProposal
-            thrown()
+            thrown(ProposalStateCannotBeUpdatedException)
 
         where:
             updatedState << [ACCEPTED, VERIFIED, DELETED, CREATED, REJECTED, PUBLISHED]
@@ -163,7 +164,7 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
 
         then:
             1 * repository.findById(ID) >> oldProposal
-            thrown()
+            thrown(ProposalStateCannotBeUpdatedException)
 
         where:
             updatedState << [ACCEPTED, VERIFIED, DELETED, CREATED, REJECTED, PUBLISHED]

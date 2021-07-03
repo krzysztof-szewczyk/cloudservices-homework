@@ -1,5 +1,6 @@
 package com.cloudservices.homework.domain.model.proposal;
 
+import com.cloudservices.homework.domain.model.proposal.exceptions.ProposalCannotBeCreatedException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -20,7 +21,7 @@ public class NewProposal {
 
     void validateIfNotNullFields() {
         if (checkIfAnyFieldIsNull()) {
-            throw new IllegalArgumentException();
+            throw new ProposalCannotBeCreatedException();
         }
     }
 

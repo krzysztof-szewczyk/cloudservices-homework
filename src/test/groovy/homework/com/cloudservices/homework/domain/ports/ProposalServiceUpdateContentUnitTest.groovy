@@ -2,6 +2,7 @@ package homework.com.cloudservices.homework.domain.ports
 
 import com.cloudservices.homework.domain.model.proposal.Proposal
 import com.cloudservices.homework.domain.model.proposal.ProposalState
+import com.cloudservices.homework.domain.model.proposal.exceptions.ProposalContentCannotBeUpdatedException
 import com.cloudservices.homework.domain.ports.ProposalRepository
 import com.cloudservices.homework.domain.ports.ProposalService
 import org.bson.types.ObjectId
@@ -49,7 +50,7 @@ class ProposalServiceUpdateContentUnitTest extends Specification {
 
         then:
             1 * repository.findById(ID) >> oldProposal
-            thrown()
+            thrown(ProposalContentCannotBeUpdatedException)
 
         where:
             state << [PUBLISHED, REJECTED, ACCEPTED, DELETED]

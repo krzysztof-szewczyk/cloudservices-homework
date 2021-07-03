@@ -1,6 +1,7 @@
 package homework.com.cloudservices.homework.domain.ports
 
 import com.cloudservices.homework.domain.model.proposal.NewProposal
+import com.cloudservices.homework.domain.model.proposal.exceptions.ProposalCannotBeCreatedException
 import com.cloudservices.homework.domain.ports.ProposalRepository
 import com.cloudservices.homework.domain.ports.ProposalService
 import spock.lang.Specification
@@ -29,7 +30,7 @@ class ProposalServiceCreateUnitTest extends Specification {
         when: "create new proposal"
             service.create(name, content)
         then: "throw exception"
-            thrown(IllegalArgumentException)
+            thrown(ProposalCannotBeCreatedException)
         where: "any of fields is null"
             name | content
             null | CONTENT

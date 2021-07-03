@@ -1,5 +1,7 @@
 package com.cloudservices.homework.domain.model.proposal;
 
+import com.cloudservices.homework.domain.model.proposal.exceptions.ProposalContentCannotBeUpdatedException;
+import com.cloudservices.homework.domain.model.proposal.exceptions.ProposalStateCannotBeUpdatedException;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,7 +30,7 @@ public class Proposal {
 
     private void validateContentUpdate(String content) {
         if (isNull(content) || !hasUpdatableContent()) {
-            throw new IllegalArgumentException();
+            throw new ProposalContentCannotBeUpdatedException();
         }
     }
 
@@ -38,7 +40,7 @@ public class Proposal {
 
     private void validateStateUpdate(ProposalState state) {
         if (isNull(state) || !hasProperNextState(state)) {
-            throw new IllegalArgumentException();
+            throw new ProposalStateCannotBeUpdatedException();
         }
     }
 
