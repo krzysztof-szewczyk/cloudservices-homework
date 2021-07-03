@@ -6,6 +6,8 @@ import com.cloudservices.homework.domain.model.proposal.ProposalState;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.math.BigInteger;
+
 public interface ProposalRepository {
 
     Proposal save(NewProposal newProposal);
@@ -15,4 +17,6 @@ public interface ProposalRepository {
     Proposal findById(String id);
 
     Page<Proposal> findByNameAndState(String name, ProposalState state, Pageable pageable);
+
+    boolean existsByUuid(long uuid);
 }

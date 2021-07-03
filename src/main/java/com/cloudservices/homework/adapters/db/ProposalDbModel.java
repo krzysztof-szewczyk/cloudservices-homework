@@ -27,6 +27,7 @@ class ProposalDbModel {
     String content;
     ProposalState state;
     String reason;
+    long uuid;
 
     public static ProposalDbModel of(NewProposal newProposal) {
         return ProposalDbModel.builder()
@@ -45,6 +46,7 @@ class ProposalDbModel {
                 .content(proposal.getContent())
                 .state(proposal.getState())
                 .reason(proposal.getReason())
+                .uuid(proposal.getUuid())
                 .build();
     }
 
@@ -55,6 +57,7 @@ class ProposalDbModel {
                 .content(proposalDbModel.getContent())
                 .state(proposalDbModel.getState())
                 .reason(proposalDbModel.getReason())
+                .uuid(proposalDbModel.getUuid())
                 .build();
     }
 }

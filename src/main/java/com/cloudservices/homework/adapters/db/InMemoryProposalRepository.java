@@ -8,6 +8,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.math.BigInteger;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -19,10 +20,11 @@ public class InMemoryProposalRepository implements ProposalRepository {
 
     @Override
     public Proposal save(NewProposal newProposal) {
-        String id = ObjectId.get().toString();
-        Proposal proposal = new Proposal(id, newProposal.getName(), newProposal.getContent(), CREATED, null);
-        map.put(id, proposal);
-        return proposal;
+//        String id = ObjectId.get().toString();
+//        Proposal proposal = new Proposal(id, newProposal.getName(), newProposal.getContent(), CREATED, null);
+//        map.put(id, proposal);
+//        return proposal;
+        return null;
     }
 
     @Override
@@ -39,5 +41,10 @@ public class InMemoryProposalRepository implements ProposalRepository {
     @Override
     public Page<Proposal> findByNameAndState(String name, ProposalState state, Pageable pageable) {
         return null;
+    }
+
+    @Override
+    public boolean existsByUuid(long uuid) {
+        return false;
     }
 }

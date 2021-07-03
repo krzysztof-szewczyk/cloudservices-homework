@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+import java.math.BigInteger;
+
+import static com.cloudservices.homework.domain.model.proposal.ProposalState.PUBLISHED;
 import static com.cloudservices.homework.domain.model.proposal.ProposalState.getReasonRequiredStates;
 import static com.cloudservices.homework.domain.model.proposal.ProposalState.getUpdatableContentStates;
 import static java.util.Objects.isNull;
@@ -21,7 +24,8 @@ public class Proposal {
     private final String name;
     private String content;
     private ProposalState state;
-    private final String reason;
+    private String reason;
+    private long uuid;
 
     public void setContent(String content) {
         validateContentUpdate(content);
@@ -33,8 +37,20 @@ public class Proposal {
         this.state = state;
     }
 
+    public void setUuid(long uuid) {
+        if (state == PUBLISHED) {
+            this.uuid = uuid;
+        }
+    }
+
+    public void setReason(String reason) {
+        if (doesStateRequireReason(this.state)) {
+            this.reason = reason;
+        }
+    }
+
     public static void validateStateRequirements(ProposalState state, String reason) {
-        if (getReasonRequiredStates().contains(state) && isBlank(reason))  {
+        if (doesStateRequireReason(state) && isBlank(reason)) {
             throw new ProposalStateCannotBeUpdatedException();
         }
     }
@@ -60,4 +76,7 @@ public class Proposal {
                 .contains(state);
     }
 
+    private static boolean doesStateRequireReason(ProposalState state) {
+        return getReasonRequiredStates().contains(state);
+    }
 }

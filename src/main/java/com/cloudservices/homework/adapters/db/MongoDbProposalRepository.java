@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
+
 @Repository
 @RequiredArgsConstructor
 class MongoDbProposalRepository implements ProposalRepository {
@@ -58,5 +60,10 @@ class MongoDbProposalRepository implements ProposalRepository {
                 .state(state)
                 .build();
         return Example.of(proposalDbModel, matcher);
+    }
+
+    @Override
+    public boolean existsByUuid(long uuid) {
+        return repository.existsByUuid(uuid);
     }
 }
