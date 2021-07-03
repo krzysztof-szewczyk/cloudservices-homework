@@ -3,6 +3,7 @@ services:
   database:
     image: mongo:latest
     container_name: mongodb
+    restart: always
     environment:
       - MONGO_INITDB_DATABASE=homework
       - MONGO_INITDB_ROOT_USERNAME=root

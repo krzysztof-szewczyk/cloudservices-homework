@@ -20,7 +20,7 @@ public class InMemoryProposalRepository implements ProposalRepository {
     @Override
     public Proposal save(NewProposal newProposal) {
         String id = ObjectId.get().toString();
-        Proposal proposal = new Proposal(id, newProposal.getName(), newProposal.getContent(), CREATED);
+        Proposal proposal = new Proposal(id, newProposal.getName(), newProposal.getContent(), CREATED, null);
         map.put(id, proposal);
         return proposal;
     }

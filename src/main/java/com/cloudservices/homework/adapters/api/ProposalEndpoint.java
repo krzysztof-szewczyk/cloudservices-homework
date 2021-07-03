@@ -3,6 +3,7 @@ package com.cloudservices.homework.adapters.api;
 import com.cloudservices.homework.domain.model.proposal.ProposalState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.awt.print.Pageable;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
@@ -47,8 +47,8 @@ class ProposalEndpoint {
     @GetMapping
     @ResponseStatus(OK)
     public Page<ProposalResponse> findByNameOrState(@RequestParam(required = false) String name,
-                                          @RequestParam(required = false) ProposalState state,
-                                          @PageableDefault Pageable pageable) {
+                                                    @RequestParam(required = false) ProposalState state,
+                                                    @PageableDefault Pageable pageable) {
         return proposalApiService.findByNameOrState(name, state, pageable);
     }
 

@@ -24,13 +24,15 @@ class ProposalDbModel {
     String name;
     String content;
     ProposalState state;
+    String reason;
 
     public static ProposalDbModel of(NewProposal newProposal) {
         return new ProposalDbModel(
                 null,
                 newProposal.getName(),
                 newProposal.getContent(),
-                CREATED
+                CREATED,
+                null
         );
     }
 
@@ -39,7 +41,8 @@ class ProposalDbModel {
                 proposal.getId(),
                 proposal.getName(),
                 proposal.getContent(),
-                proposal.getState()
+                proposal.getState(),
+                proposal.getReason()
         );
     }
 
@@ -48,7 +51,8 @@ class ProposalDbModel {
                 proposalDbModel.getId(),
                 proposalDbModel.getName(),
                 proposalDbModel.getContent(),
-                proposalDbModel.getState()
+                proposalDbModel.getState(),
+                proposalDbModel.getReason()
         );
     }
 }

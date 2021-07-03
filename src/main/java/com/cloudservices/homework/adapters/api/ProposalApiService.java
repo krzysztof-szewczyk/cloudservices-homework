@@ -5,9 +5,9 @@ import com.cloudservices.homework.domain.model.proposal.ProposalState;
 import com.cloudservices.homework.domain.ports.ProposalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import java.awt.print.Pageable;
 
 @Component
 @RequiredArgsConstructor
@@ -21,14 +21,17 @@ class ProposalApiService {
     }
 
     ProposalResponse updateContent(UpdateProposalContentRequest request) {
-        return null;
+        Proposal proposal = service.updateContent(request.getId(), request.getContent());
+        return ProposalResponse.of(proposal);
     }
 
     ProposalResponse updateState(UpdateProposalStateRequest request) {
-        return null;
+        Proposal proposal = service.updateState(request.getId(), request.getState(), request.getReason());
+        return ProposalResponse.of(proposal);
     }
 
     Page<ProposalResponse> findByNameOrState(String name, ProposalState state, Pageable pageable) {
-        return null;
+        Page<Proposal> proposalPage = service.findByNameOrState(name, state, pageable);
+        return proposalPage.map(ProposalResponse::of);
     }
 }

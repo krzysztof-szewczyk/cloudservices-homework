@@ -57,11 +57,11 @@ class ProposalServiceUpdateContentUnitTest extends Specification {
     }
 
     private def createProposalWithFixedState(ProposalState state) {
-        new Proposal(ID, OLD_NAME, OLD_CONTENT, state)
+        new Proposal(ID, OLD_NAME, OLD_CONTENT, state, null)
     }
 
     private def createProposalWithUpdatedContent(ProposalState state) {
-        new Proposal(ID, OLD_NAME, UPDATED_CONTENT, state)
+        new Proposal(ID, OLD_NAME, UPDATED_CONTENT, state, null)
     }
 
 }

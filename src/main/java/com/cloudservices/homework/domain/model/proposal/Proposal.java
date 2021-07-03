@@ -19,6 +19,7 @@ public class Proposal {
     private final String name;
     private String content;
     private ProposalState state;
+    private final String reason;
 
     public void setContent(String content) {
         validateContentUpdate(content);
