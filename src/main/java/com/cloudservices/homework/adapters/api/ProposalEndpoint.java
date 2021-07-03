@@ -32,13 +32,13 @@ class ProposalEndpoint {
         return proposalApiService.create(createProposalRequest);
     }
 
-    @PutMapping
+    @PutMapping("/content")
     @ResponseStatus(OK)
     public ProposalResponse updateContent(@RequestBody @Valid UpdateProposalContentRequest updateProposalStateRequest) {
         return proposalApiService.updateContent(updateProposalStateRequest);
     }
 
-    @PutMapping
+    @PutMapping("/state")
     @ResponseStatus(OK)
     public ProposalResponse updateState(@RequestBody @Valid UpdateProposalStateRequest updateProposalStateRequest) {
         return proposalApiService.updateState(updateProposalStateRequest);

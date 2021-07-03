@@ -20,6 +20,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation group: 'com.google.collections', name: 'google-collections', version: '1.0'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.2'
+    implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'

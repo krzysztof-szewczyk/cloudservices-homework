@@ -6,12 +6,8 @@ import com.cloudservices.homework.domain.model.proposal.ProposalState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.util.StringUtils;
 
 import static com.cloudservices.homework.domain.model.proposal.Proposal.validateStateRequirements;
-import static com.cloudservices.homework.domain.model.proposal.ProposalState.CREATED;
-import static com.cloudservices.homework.domain.model.proposal.ProposalState.getReasonRequiredStates;
-import static org.apache.logging.log4j.util.Strings.isBlank;
 
 @RequiredArgsConstructor
 public class ProposalService {
@@ -37,6 +33,6 @@ public class ProposalService {
     }
 
     public Page<Proposal> findByNameOrState(String name, ProposalState state, Pageable pageable) {
-        return repository.findByNameOrState(name, state, pageable);
+        return repository.findByNameAndState(name, state, pageable);
     }
 }

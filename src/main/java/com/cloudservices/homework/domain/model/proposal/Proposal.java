@@ -3,6 +3,7 @@ package com.cloudservices.homework.domain.model.proposal;
 import com.cloudservices.homework.domain.model.proposal.exceptions.ProposalContentCannotBeUpdatedException;
 import com.cloudservices.homework.domain.model.proposal.exceptions.ProposalStateCannotBeUpdatedException;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -13,6 +14,7 @@ import static org.apache.logging.log4j.util.Strings.isBlank;
 
 @AllArgsConstructor
 @Getter
+@Builder
 @EqualsAndHashCode
 public class Proposal {
     private final String id;

@@ -37,7 +37,7 @@ public class InMemoryProposalRepository implements ProposalRepository {
     }
 
     @Override
-    public Page<Proposal> findByNameOrState(String name, ProposalState state, Pageable pageable) {
+    public Page<Proposal> findByNameAndState(String name, ProposalState state, Pageable pageable) {
         return null;
     }
 }

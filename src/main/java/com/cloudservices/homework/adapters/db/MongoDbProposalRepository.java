@@ -6,6 +6,8 @@ import com.cloudservices.homework.domain.model.proposal.ProposalState;
 import com.cloudservices.homework.adapters.db.exceptions.ProposalNotFoundException;
 import com.cloudservices.homework.domain.ports.ProposalRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -13,6 +15,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 class MongoDbProposalRepository implements ProposalRepository {
+
+    private static final ExampleMatcher matcher = ExampleMatcher.matching()
+            .withIgnoreNullValues()
+            .withMatcher("name", match -> match.ignoreCase().contains());
 
     private final SpringDataMongoProposalRepository repository;
 
@@ -36,13 +42,21 @@ class MongoDbProposalRepository implements ProposalRepository {
     }
 
     @Override
-    public Page<Proposal> findByNameOrState(String name, ProposalState state, Pageable pageable) {
-        Page<ProposalDbModel> page = repository.findByNameOrState(name, state, pageable);
+    public Page<Proposal> findByNameAndState(String name, ProposalState state, Pageable pageable) {
+        Page<ProposalDbModel> page = repository.findAll(createExample(name, state), pageable);
         return page.map(ProposalDbModel::from);
     }
 
     private Proposal save(ProposalDbModel proposalDbModel) {
         ProposalDbModel saved = repository.save(proposalDbModel);
         return ProposalDbModel.from(saved);
+    }
+
+    private Example<ProposalDbModel> createExample(String name, ProposalState state) {
+        ProposalDbModel proposalDbModel = ProposalDbModel.builder()
+                .name(name)
+                .state(state)
+                .build();
+        return Example.of(proposalDbModel, matcher);
     }
 }

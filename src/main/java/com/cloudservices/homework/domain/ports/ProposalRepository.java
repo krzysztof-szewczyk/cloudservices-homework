@@ -14,5 +14,5 @@ public interface ProposalRepository {
 
     Proposal findById(String id);
 
-    Page<Proposal> findByNameOrState(String name, ProposalState state, Pageable pageable);
+    Page<Proposal> findByNameAndState(String name, ProposalState state, Pageable pageable);
 }

@@ -22,7 +22,7 @@ class ProposalServiceFindPageUnitTest extends Specification {
         when:
             subject.findByNameOrState(name, state, pageRequest)
         then:
-            1 * repository.findByNameOrState(name, state, pageRequest)
+            1 * repository.findByNameAndState(name, state, pageRequest)
         where:
             name   | state
             null   | null

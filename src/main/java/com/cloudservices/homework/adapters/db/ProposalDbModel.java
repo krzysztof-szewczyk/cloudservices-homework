@@ -4,6 +4,7 @@ import com.cloudservices.homework.domain.model.proposal.NewProposal;
 import com.cloudservices.homework.domain.model.proposal.Proposal;
 import com.cloudservices.homework.domain.model.proposal.ProposalState;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import static com.cloudservices.homework.domain.model.proposal.ProposalState.CRE
 @Document(collection = "proposals")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Getter
 @Setter
 class ProposalDbModel {
@@ -27,32 +29,32 @@ class ProposalDbModel {
     String reason;
 
     public static ProposalDbModel of(NewProposal newProposal) {
-        return new ProposalDbModel(
-                null,
-                newProposal.getName(),
-                newProposal.getContent(),
-                CREATED,
-                null
-        );
+        return ProposalDbModel.builder()
+                .id(null)
+                .name(newProposal.getName())
+                .content(newProposal.getContent())
+                .state(CREATED)
+                .reason(null)
+                .build();
     }
 
     public static ProposalDbModel of(Proposal proposal) {
-        return new ProposalDbModel(
-                proposal.getId(),
-                proposal.getName(),
-                proposal.getContent(),
-                proposal.getState(),
-                proposal.getReason()
-        );
+        return ProposalDbModel.builder()
+                .id(proposal.getId())
+                .name(proposal.getName())
+                .content(proposal.getContent())
+                .state(proposal.getState())
+                .reason(proposal.getReason())
+                .build();
     }
 
     public static Proposal from(ProposalDbModel proposalDbModel) {
-        return new Proposal(
-                proposalDbModel.getId(),
-                proposalDbModel.getName(),
-                proposalDbModel.getContent(),
-                proposalDbModel.getState(),
-                proposalDbModel.getReason()
-        );
+        return Proposal.builder()
+                .id(proposalDbModel.getId())
+                .name(proposalDbModel.getName())
+                .content(proposalDbModel.getContent())
+                .state(proposalDbModel.getState())
+                .reason(proposalDbModel.getReason())
+                .build();
     }
 }
