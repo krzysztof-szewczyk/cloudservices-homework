@@ -2,6 +2,7 @@ package com.cloudservices.homework.adapters.db;
 
 import com.cloudservices.homework.domain.model.proposal.NewProposal;
 import com.cloudservices.homework.domain.model.proposal.Proposal;
+import com.cloudservices.homework.domain.model.proposal.ProposalState;
 import com.cloudservices.homework.domain.ports.ProposalRepository;
 import org.bson.types.ObjectId;
 
@@ -35,6 +36,11 @@ public class InMemoryProposalRepository implements ProposalRepository {
 
     @Override
     public Proposal findById(String id) {
+        return null;
+    }
+
+    @Override
+    public Proposal existsByIdAndState(String id, ProposalState state) {
         return null;
     }
 

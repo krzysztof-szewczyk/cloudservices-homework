@@ -2,6 +2,7 @@ package com.cloudservices.homework.adapters.db;
 
 import com.cloudservices.homework.domain.model.proposal.NewProposal;
 import com.cloudservices.homework.domain.model.proposal.Proposal;
+import com.cloudservices.homework.domain.model.proposal.ProposalState;
 import com.cloudservices.homework.domain.ports.ProposalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -31,6 +32,11 @@ class MongoDbProposalRepository implements ProposalRepository {
 
     @Override
     public Proposal findById(String id) {
+        return null;
+    }
+
+    @Override
+    public Proposal existsByIdAndState(String id, ProposalState state) {
         return null;
     }
 

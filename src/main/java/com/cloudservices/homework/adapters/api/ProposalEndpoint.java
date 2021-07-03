@@ -47,12 +47,6 @@ class ProposalEndpoint {
         return proposalApiService.updateState(updateProposalStateRequest);
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(NO_CONTENT)
-    public void delete(@PathVariable String id) {
-        proposalApiService.delete(id);
-    }
-
     @GetMapping
     @ResponseStatus(OK)
     public Page<ProposalResponse> findPage(@RequestParam String name,

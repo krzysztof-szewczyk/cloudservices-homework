@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import static com.cloudservices.homework.domain.model.proposal.ProposalState.CREATED;
+
 @RequiredArgsConstructor
 public class ProposalService {
 
@@ -27,9 +29,6 @@ public class ProposalService {
         Proposal proposal = repository.findById(id);
         proposal.setState(state);
         return repository.update(proposal);
-    }
-
-    public void delete(String id) {
     }
 
     public Page<Proposal> findPage(String name, ProposalState state, Pageable pageable) {

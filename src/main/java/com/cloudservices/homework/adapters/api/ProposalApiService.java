@@ -28,10 +28,6 @@ class ProposalApiService {
         return null;
     }
 
-    void delete(String id) {
-
-    }
-
     Page<ProposalResponse> findPage(String name, ProposalState state, Pageable pageable) {
         return null;
     }
