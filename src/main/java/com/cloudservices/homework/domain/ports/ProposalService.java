@@ -31,7 +31,7 @@ public class ProposalService {
         return repository.update(proposal);
     }
 
-    public Page<Proposal> findPage(String name, ProposalState state, Pageable pageable) {
-        return null;
+    public Page<Proposal> findByNameOrState(String name, ProposalState state, Pageable pageable) {
+        return repository.findByNameOrState(name, state, pageable);
     }
 }

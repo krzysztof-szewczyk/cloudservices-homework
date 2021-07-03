@@ -5,6 +5,8 @@ import com.cloudservices.homework.domain.model.proposal.Proposal;
 import com.cloudservices.homework.domain.model.proposal.ProposalState;
 import com.cloudservices.homework.domain.ports.ProposalRepository;
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -30,22 +32,12 @@ public class InMemoryProposalRepository implements ProposalRepository {
     }
 
     @Override
-    public void delete(String id) {
-
-    }
-
-    @Override
     public Proposal findById(String id) {
         return null;
     }
 
     @Override
-    public Proposal existsByIdAndState(String id, ProposalState state) {
+    public Page<Proposal> findByNameOrState(String name, ProposalState state, Pageable pageable) {
         return null;
-    }
-
-    @Override
-    public void findAll() {
-
     }
 }

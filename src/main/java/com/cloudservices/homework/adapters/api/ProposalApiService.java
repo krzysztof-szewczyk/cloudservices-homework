@@ -28,7 +28,7 @@ class ProposalApiService {
         return null;
     }
 
-    Page<ProposalResponse> findPage(String name, ProposalState state, Pageable pageable) {
+    Page<ProposalResponse> findByNameOrState(String name, ProposalState state, Pageable pageable) {
         return null;
     }
 }

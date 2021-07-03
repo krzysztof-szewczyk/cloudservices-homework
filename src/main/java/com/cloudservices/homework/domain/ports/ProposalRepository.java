@@ -3,6 +3,8 @@ package com.cloudservices.homework.domain.ports;
 import com.cloudservices.homework.domain.model.proposal.NewProposal;
 import com.cloudservices.homework.domain.model.proposal.Proposal;
 import com.cloudservices.homework.domain.model.proposal.ProposalState;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ProposalRepository {
 
@@ -10,11 +12,7 @@ public interface ProposalRepository {
 
     Proposal update(Proposal proposal);
 
-    void delete(String id);
-
     Proposal findById(String id);
 
-    Proposal existsByIdAndState(String id, ProposalState state);
-
-    void findAll();
+    Page<Proposal> findByNameOrState(String name, ProposalState state, Pageable pageable);
 }
