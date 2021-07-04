@@ -22,7 +22,7 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/proposal")
-class ProposalEndpoint {
+public class ProposalEndpoint {
 
     private final ProposalApiService proposalApiService;
 
