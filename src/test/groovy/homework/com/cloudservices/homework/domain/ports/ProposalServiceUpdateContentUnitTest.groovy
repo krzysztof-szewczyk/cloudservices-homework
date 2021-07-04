@@ -5,6 +5,7 @@ import com.cloudservices.homework.domain.model.proposal.ProposalState
 import com.cloudservices.homework.domain.model.proposal.exceptions.ProposalContentCannotBeUpdatedException
 import com.cloudservices.homework.domain.ports.ProposalRepository
 import com.cloudservices.homework.domain.ports.ProposalService
+import com.cloudservices.homework.domain.ports.UuidGenerator
 import org.bson.types.ObjectId
 import spock.lang.Specification
 import spock.lang.Subject
@@ -20,8 +21,10 @@ class ProposalServiceUpdateContentUnitTest extends Specification {
     private final def UPDATED_CONTENT = "updated content"
 
     ProposalRepository repository = Mock(ProposalRepository)
+    UuidGenerator generator = Mock(UuidGenerator)
+
     @Subject
-    ProposalService service = new ProposalService(repository)
+    ProposalService subject = new ProposalService(repository, generator)
 
     @Unroll
     def "Should update proposal content"() {
@@ -30,7 +33,7 @@ class ProposalServiceUpdateContentUnitTest extends Specification {
             def updatedProposal = createProposalWithUpdatedContent(state)
 
         when:
-            service.updateContent(ID, UPDATED_CONTENT)
+            subject.updateContent(ID, UPDATED_CONTENT)
 
         then:
             1 * repository.findById(ID) >> oldProposal
@@ -46,7 +49,7 @@ class ProposalServiceUpdateContentUnitTest extends Specification {
             def oldProposal = createProposalWithFixedState(state)
 
         when:
-            service.updateContent(ID, UPDATED_CONTENT)
+            subject.updateContent(ID, UPDATED_CONTENT)
 
         then:
             1 * repository.findById(ID) >> oldProposal
@@ -57,11 +60,21 @@ class ProposalServiceUpdateContentUnitTest extends Specification {
     }
 
     private def createProposalWithFixedState(ProposalState state) {
-        new Proposal(ID, OLD_NAME, OLD_CONTENT, state, null)
+        Proposal.builder()
+                .id(ID)
+                .name(OLD_NAME)
+                .content(OLD_CONTENT)
+                .state(state)
+                .build()
     }
 
     private def createProposalWithUpdatedContent(ProposalState state) {
-        new Proposal(ID, OLD_NAME, UPDATED_CONTENT, state, null)
+        Proposal.builder()
+                .id(ID)
+                .name(OLD_NAME)
+                .content(UPDATED_CONTENT)
+                .state(state)
+                .build()
     }
 
 }

@@ -3,6 +3,7 @@ package homework.com.cloudservices.homework.domain.ports
 
 import com.cloudservices.homework.domain.ports.ProposalRepository
 import com.cloudservices.homework.domain.ports.ProposalService
+import com.cloudservices.homework.domain.ports.UuidGenerator
 import org.springframework.data.domain.PageRequest
 import spock.lang.Specification
 import spock.lang.Subject
@@ -13,8 +14,10 @@ import static com.cloudservices.homework.domain.model.proposal.ProposalState.CRE
 class ProposalServiceFindPageUnitTest extends Specification {
 
     ProposalRepository repository = Mock(ProposalRepository)
+    UuidGenerator generator = Mock(UuidGenerator)
+
     @Subject
-    ProposalService subject = new ProposalService(repository)
+    ProposalService subject = new ProposalService(repository, generator)
 
     @Unroll
     def "Should find proposals' page"() {

@@ -4,6 +4,7 @@ import com.cloudservices.homework.domain.model.proposal.NewProposal
 import com.cloudservices.homework.domain.model.proposal.exceptions.ProposalCannotBeCreatedException
 import com.cloudservices.homework.domain.ports.ProposalRepository
 import com.cloudservices.homework.domain.ports.ProposalService
+import com.cloudservices.homework.domain.ports.UuidGenerator
 import spock.lang.Specification
 import spock.lang.Subject
 
@@ -16,19 +17,21 @@ class ProposalServiceCreateUnitTest extends Specification {
     private def newProposal = new NewProposal(NAME, CONTENT)
 
     ProposalRepository repository = Mock(ProposalRepository)
+    UuidGenerator generator = Mock(UuidGenerator)
+
     @Subject
-    ProposalService service = new ProposalService(repository)
+    ProposalService subject = new ProposalService(repository, generator)
 
     def "Should create new proposal"() {
         when: "all fields are not null"
-            service.create(NAME, CONTENT)
+            subject.create(NAME, CONTENT)
         then: "proposal should be persisted"
             1 * repository.save(newProposal)
     }
 
     def "Should not create new proposal"() {
         when: "create new proposal"
-            service.create(name, content)
+            subject.create(name, content)
         then: "throw exception"
             thrown(ProposalCannotBeCreatedException)
         where: "any of fields is null"

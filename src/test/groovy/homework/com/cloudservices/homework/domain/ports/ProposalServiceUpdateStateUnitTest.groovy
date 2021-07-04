@@ -1,36 +1,44 @@
 package homework.com.cloudservices.homework.domain.ports
 
-
 import com.cloudservices.homework.domain.model.proposal.Proposal
 import com.cloudservices.homework.domain.model.proposal.ProposalState
 import com.cloudservices.homework.domain.model.proposal.exceptions.ProposalStateCannotBeUpdatedException
 import com.cloudservices.homework.domain.ports.ProposalRepository
 import com.cloudservices.homework.domain.ports.ProposalService
+import com.cloudservices.homework.domain.ports.UuidGenerator
 import org.bson.types.ObjectId
 import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll
 
-import static com.cloudservices.homework.domain.model.proposal.ProposalState.*
+import static com.cloudservices.homework.domain.model.proposal.ProposalState.ACCEPTED
+import static com.cloudservices.homework.domain.model.proposal.ProposalState.CREATED
+import static com.cloudservices.homework.domain.model.proposal.ProposalState.DELETED
+import static com.cloudservices.homework.domain.model.proposal.ProposalState.PUBLISHED
+import static com.cloudservices.homework.domain.model.proposal.ProposalState.REJECTED
+import static com.cloudservices.homework.domain.model.proposal.ProposalState.VERIFIED
 
 class ProposalServiceUpdateStateUnitTest extends Specification {
 
     private final def ID = ObjectId.get().toString()
     private final def OLD_NAME = "name"
     private final def OLD_CONTENT = "content"
+    private static final def UUID = 267477262965985540
 
     ProposalRepository repository = Mock(ProposalRepository)
+    UuidGenerator generator = Mock(UuidGenerator)
+
     @Subject
-    ProposalService service = new ProposalService(repository)
+    ProposalService subject = new ProposalService(repository, generator)
 
     @Unroll
     def "Should update proposal state from CREATED to #updatedState"() {
         given:
             def oldProposal = createProposalWithFixedState(CREATED)
-            def updatedProposal = createProposalWithFixedState(updatedState)
+            def updatedProposal = createProposalWithFixedState(updatedState, reason)
 
         when:
-            service.updateState(ID, updatedState, reason)
+            subject.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
@@ -48,7 +56,7 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
             def oldProposal = createProposalWithFixedState(CREATED)
 
         when:
-            service.updateState(ID, updatedState, reason)
+            subject.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
@@ -66,10 +74,10 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
     def "Should update proposal state from VERIFIED to #updatedState"() {
         given:
             def oldProposal = createProposalWithFixedState(VERIFIED)
-            def updatedProposal = createProposalWithFixedState(updatedState)
+            def updatedProposal = createProposalWithFixedState(updatedState, reason)
 
         when:
-            service.updateState(ID, updatedState, reason)
+            subject.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
@@ -87,7 +95,7 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
             def oldProposal = createProposalWithFixedState(VERIFIED)
 
         when:
-            service.updateState(ID, updatedState, reason)
+            subject.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
@@ -105,19 +113,20 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
     def "Should update proposal state from ACCEPTED to #updatedState"() {
         given:
             def oldProposal = createProposalWithFixedState(ACCEPTED)
-            def updatedProposal = createProposalWithFixedState(updatedState)
+            def updatedProposal = createProposalWithFixedState(updatedState, reason, uuid)
 
         when:
-            service.updateState(ID, updatedState, reason)
+            subject.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
+            generatorCalls * generator.generateUuid() >> UUID
             1 * repository.update(updatedProposal)
 
         where:
-            updatedState | reason
-            PUBLISHED    | null
-            REJECTED     | "reason"
+            updatedState | reason   | uuid | generatorCalls
+            PUBLISHED    | null     | UUID | 1
+            REJECTED     | "reason" | null | 0
     }
 
     @Unroll
@@ -126,7 +135,7 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
             def oldProposal = createProposalWithFixedState(ACCEPTED)
 
         when:
-            service.updateState(ID, updatedState, reason)
+            subject.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
@@ -146,7 +155,7 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
             def oldProposal = createProposalWithFixedState(DELETED)
 
         when:
-            service.updateState(ID, updatedState, reason)
+            subject.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
@@ -168,7 +177,7 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
             def oldProposal = createProposalWithFixedState(REJECTED)
 
         when:
-            service.updateState(ID, updatedState, reason)
+            subject.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
@@ -190,7 +199,7 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
             def oldProposal = createProposalWithFixedState(PUBLISHED)
 
         when:
-            service.updateState(ID, updatedState, reason)
+            subject.updateState(ID, updatedState, reason)
 
         then:
             1 * repository.findById(ID) >> oldProposal
@@ -208,7 +217,7 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
 
     def "Should NOT update proposal state when no reason"() {
         when:
-            service.updateState(ID, updatedState, reason)
+            subject.updateState(ID, updatedState, reason)
 
         then:
             0 * _
@@ -225,7 +234,22 @@ class ProposalServiceUpdateStateUnitTest extends Specification {
     }
 
     private def createProposalWithFixedState(ProposalState state) {
-        new Proposal(ID, OLD_NAME, OLD_CONTENT, state, null)
+        createProposalWithFixedState(state, null)
+    }
+
+    private def createProposalWithFixedState(ProposalState state, String reason) {
+        createProposalWithFixedState(state, reason, null)
+    }
+
+    private def createProposalWithFixedState(ProposalState state, String reason, Long uuid) {
+        Proposal.builder()
+                .id(ID)
+                .name(OLD_NAME)
+                .content(OLD_CONTENT)
+                .state(state)
+                .reason(reason)
+                .uuid(uuid)
+                .build()
     }
 
 }
