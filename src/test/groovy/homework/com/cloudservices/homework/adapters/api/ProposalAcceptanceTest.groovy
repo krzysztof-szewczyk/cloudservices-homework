@@ -1,24 +1,18 @@
 package homework.com.cloudservices.homework.adapters.api
 
 import com.cloudservices.homework.HomeworkApplication
-import com.cloudservices.homework.adapters.api.ProposalEndpoint
+import com.jayway.jsonpath.JsonPath
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration
-import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
-import org.springframework.boot.test.autoconfigure.filter.TypeExcludeFilters
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.data.domain.PageRequest
-import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
 import spock.lang.Specification
 
 import static org.springframework.http.MediaType.APPLICATION_JSON
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
@@ -37,9 +31,6 @@ class ProposalAcceptanceTest extends Specification {
     @Autowired
     MockMvc mvc
 
-    @Autowired
-    ProposalEndpoint proposalApiService
-
     def "Full positive way"() {
         when: "create new proposal"
             ResultActions resultActions = mvc.perform(post(PROPOSAL_SEGMENT)
@@ -57,14 +48,21 @@ class ProposalAcceptanceTest extends Specification {
             resultActions.andExpect(jsonPath("\$.state").value("CREATED"))
             resultActions.andExpect(jsonPath("\$.id").exists())
 
-        when: "bump to VERIFIED status"
-            def id = proposalApiService.findByNameOrState(null, null, PageRequest.of(0, 1))
-                    .getContent()
-                    .stream()
-                    .map(a -> a.getId())
-                    .findFirst()
-                    .get()
+        when: "find by status and name"
+            resultActions = mvc.perform(get(PROPOSAL_SEGMENT)
+                    .param("name", "y-nam")
+                    .param("state", "CREATED")
+            )
 
+
+        then: "return requested proposal page and get proposal id"
+            resultActions.andExpect(status().isOk())
+            def id = JsonPath.parse(resultActions.andReturn()
+                    .getResponse()
+                    .getContentAsString()
+            ).read("\$.content[0].id")
+
+        when: "bump to VERIFIED status"
             resultActions = mvc.perform(put(STATE_SEGMENT)
                     .contentType(APPLICATION_JSON)
                     .content("""
@@ -75,7 +73,7 @@ class ProposalAcceptanceTest extends Specification {
                         """)
             )
 
-        then: "return OK"
+        then: "return OK with new state of proposal"
             resultActions.andExpect(status().isOk())
             resultActions.andExpect(jsonPath("\$.state").value("VERIFIED"))
 
@@ -90,7 +88,7 @@ class ProposalAcceptanceTest extends Specification {
                         """)
             )
 
-        then: "return OK"
+        then: "return OK with new content of proposal"
             resultActions.andExpect(status().isOk())
             resultActions.andExpect(jsonPath("\$.content").value("updated my-content"))
 
@@ -105,7 +103,7 @@ class ProposalAcceptanceTest extends Specification {
                         """)
             )
 
-        then: "return OK"
+        then: "return OK with new state of proposal"
             resultActions.andExpect(status().isOk())
             resultActions.andExpect(jsonPath("\$.state").value("ACCEPTED"))
 
