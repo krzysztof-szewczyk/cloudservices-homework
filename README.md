@@ -19,5 +19,5 @@
    - updated can be either proposal content or proposal state (not both together)
    - filtering
       - ignore null params (name or state)
-      - name contains given phrase ignoring case
+      - name is filtered by containing given phrase (ignoring case)
    - for change history (auditing) has been used JaVers lib (no endpoint was created)
