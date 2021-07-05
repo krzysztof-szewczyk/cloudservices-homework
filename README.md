@@ -20,4 +20,4 @@
    - filtering
       - ignore null params (name or state)
       - name contains given phrase ignoring case
-   - for change history (auditing) has been used JaVers lib
+   - for change history (auditing) has been used JaVers lib (no endpoint was created)
