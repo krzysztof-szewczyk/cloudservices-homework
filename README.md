@@ -13,7 +13,7 @@
    HomeworkApp: http://localhost:8080  
    Swagger: http://localhost:8080/swagger-ui/index.html
    
-# Disclaimers
+# Comments
    
    - Hexagonal Architecture has been used
    - updated can be either proposal content or proposal state (not both together)
