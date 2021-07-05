@@ -11,7 +11,7 @@ import static java.lang.Long.parseLong;
 
 @Component
 @RequiredArgsConstructor
-public class GenerexUuidGenerator implements UuidGenerator {
+class GenerexUuidGenerator implements UuidGenerator {
 
     private static final Generex generator = new Generex("[1-9][0-9]{17}");
 
