@@ -3,7 +3,7 @@ spring:
     mongodb:
       username: root
       password: root
-      database: db
+      database: proposals
       host: localhost
       port: 27017
       authentication-database: admin
@@ -12,7 +12,7 @@ javers:
   mongodb:
     username: root
     password: root
-    database: db
+    database: proposalschangelog
     host: localhost
     port: 27017
     authentication-database: admin
