@@ -21,3 +21,7 @@
       - ignore null params (name or state)
       - name is filtered by containing given phrase (ignoring case)
    - for change history (auditing) has been used JaVers lib (no endpoint was created)
+
+# TODO
+
+   - create aggregate root and add VO to domain model  
