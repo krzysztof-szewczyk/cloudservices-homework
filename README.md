@@ -29,3 +29,4 @@
 # TODO
 
    - create aggregate root and add VO to domain model  
+   - add controller advice with exception handler
